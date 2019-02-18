@@ -183,6 +183,14 @@ class SassCompiler {
         }
         const data = result.css.toString().replace('/*# sourceMappingURL=a.css.map */', '');
         const map = JSON.parse(result.map.toString());
+
+        map.sources = map.sources.map(path => {
+          if (!path.endsWith('.scss') && !path.endsWith('.css')){
+            return path + '.scss';
+          }
+          return path;
+        });
+
         resolve({data, map});
       });
     });
